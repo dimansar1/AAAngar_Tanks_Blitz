@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-class TankCreate(BaseModel):
+class TankCreateRequest(BaseModel):
     title: str
     photo_path: str
     health: str
@@ -12,7 +12,7 @@ class TankCreate(BaseModel):
     nation: str
     level: str
 
-class TankResponse(BaseModel):
+class TankCreateResponse(BaseModel):
     id: int
     title: str
     photo_path: str

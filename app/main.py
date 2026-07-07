@@ -2,7 +2,7 @@ from fastapi import FastAPI
 
 from app.api.health import router as health_router
 from app.config.config import get_settings
-from app.schemas.tanks import TankCreate, TankResponse
+from app.schemas.tanks import TankCreateRequest, TankCreateResponse
 
 settings = get_settings()
 
@@ -20,8 +20,8 @@ def root():
         "message": f"{settings.app_name} is running",
     }
 
-@app.post("/tanks", response_model = TankResponse)
-def create_tank(tank: TankCreate):
+@app.post("/tanks", response_model = TankCreateResponse)
+def create_tank(tank: TankCreateRequest):
     return {
         "id": 1,
         "title": tank.title,
