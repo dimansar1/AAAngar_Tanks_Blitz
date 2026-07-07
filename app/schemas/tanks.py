@@ -2,7 +2,7 @@ from pydantic import BaseModel
 
 class TankCreate(BaseModel):
     title: str
-    #TODO: photo
+    photo_path: str
     health: str
     damage: str
     armor: str
@@ -12,10 +12,10 @@ class TankCreate(BaseModel):
     nation: str
     level: str
 
-class TankResponce(BaseModel):
+class TankResponse(BaseModel):
     id: int
     title: str
-    #TODO: photo
+    photo_path: str
     health: str
     damage: str
     armor: str
