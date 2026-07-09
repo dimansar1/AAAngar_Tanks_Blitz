@@ -7,7 +7,7 @@ from app.models.user import User, UserRole
 from app.schemas.user import UserResponse
 from app.services.user_service import UserService
 
-router = APIRouter(prefix="/tanks", tags=["users"])
+router = APIRouter(prefix="/users", tags=["users"])
 
 
 def get_user_service(db: Session = Depends(get_db)) -> UserService:

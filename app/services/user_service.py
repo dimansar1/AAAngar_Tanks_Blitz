@@ -22,6 +22,7 @@ class UserService:
             )
 
         user = User(
+            nickname=schema.nickname,
             email=schema.email,
             hashed_password=hash_password(schema.password),
             is_active=True,
