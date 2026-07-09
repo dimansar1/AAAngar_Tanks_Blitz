@@ -5,7 +5,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
 
-from app.models.chosen import chosen
+from app.models.favourite import favourite
 
 
 class UserRole(str, Enum):
@@ -21,5 +21,4 @@ class User(Base):
     hashed_password: Mapped[str] = mapped_column(String(255), nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
     role: Mapped[str] = mapped_column(String(50), default=UserRole.USER.value, nullable=False)
-    tank_id: Mapped[int] = mapped_column(Integer, ForeignKey("tanks.id"))
-    user = relationship("Tank", secondary=chosen, back_populates="users")
+    tanks = relationship("Tank", secondary=favourite, back_populates="users")
