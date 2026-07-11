@@ -2,7 +2,7 @@ from sqlalchemy import String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
-from app.models.favourite import favourite
+from app.models.favourite import Favourite
 
 
 class Tank(Base):
@@ -18,4 +18,4 @@ class Tank(Base):
     category: Mapped[str] = mapped_column(String, nullable=False)
     nation: Mapped[str] = mapped_column(String, nullable=False)
     level: Mapped[str] = mapped_column(String, nullable=False)
-    users = relationship("User", secondary=favourite, back_populates="tanks")
+    users = relationship("Favourite", backref="tank")

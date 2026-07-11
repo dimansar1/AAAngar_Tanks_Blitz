@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 
 from app.models.tank import Tank
 from app.repositories.tank_repository import TankRepository
+from app.repositories.favourite_repository import FavouriteRepository
 from app.schemas.tank import TankCreate, TankUpdate
 
 
@@ -10,6 +11,7 @@ class TankService:
 
     def __init__(self, db: Session):
         self.repository = TankRepository(db)
+        self.favourite_repository = FavouriteRepository(db)
 
     def create_tank(self, schema: TankCreate) -> Tank:
         tank = Tank(
@@ -73,3 +75,4 @@ class TankService:
     
     def delete_tank(self, tank_id: int) -> None:
         self.repository.delete(tank_id)
+        self.favourite_repository.delete_by_tank_id(tank_id)
