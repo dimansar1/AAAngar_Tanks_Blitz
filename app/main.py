@@ -7,6 +7,7 @@ from app.handlers.health import router as health_router
 from app.handlers.auth import router as auth_router
 from app.handlers.tanks import router as tank_router
 from app.handlers.users import router as users_router
+from app.handlers.favourites import router as favourites_router
 from app.models.tank import Tank
 from app.models.user import User
 from app.config.config import get_settings
@@ -26,6 +27,7 @@ app.include_router(auth_router)
 app.include_router(health_router)
 app.include_router(tank_router)
 app.include_router(users_router)
+app.include_router(favourites_router)
 
 @app.get("/")
 def root():

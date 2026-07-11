@@ -1,13 +1,15 @@
-from sqlalchemy import Table, Column, Integer, ForeignKey
+from sqlalchemy import String, Integer, ForeignKey, UniqueConstraint
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
 
-favourite = Table('chosen', Base.metadata, 
-    Column('user_id', Integer(), ForeignKey("users.id")),
-    Column('tank_id', Integer(), ForeignKey("tanks.id"))
-)
+class Favourite(Base):
+    __tablename__ = "favourites"
+    
+    user_id: Mapped[str] = mapped_column(Integer, ForeignKey("users.id"), primary_key=True)
+    tank_id: Mapped[str] = mapped_column(Integer, ForeignKey("tanks.id"), primary_key=True)
 
-
+   
 
     
 
