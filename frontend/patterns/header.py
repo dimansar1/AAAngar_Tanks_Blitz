@@ -1,0 +1,22 @@
+import streamlit as st
+from auth.state import is_authenticated
+
+
+def header():
+    header = st.container(height=120, horizontal=True, horizontal_alignment='distribute', vertical_alignment='center')
+    header.subheader('AAAngar Tanks Blitz', width=235)
+
+    if header.button('Список танков'):
+        st.switch_page('pages/tanks.py')
+
+    if header.button('Избранное'):
+        if is_authenticated():
+            st.switch_page('pages/favourite.py')
+        else:
+            st.switch_page('pages/noregistration.py')
+
+    if header.button('Профиль'):
+        if is_authenticated():
+            st.switch_page('pages/profile.py')
+        else:
+            st.switch_page('pages/noregistration.py')
