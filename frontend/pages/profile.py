@@ -8,7 +8,7 @@ from patterns.header import header
 
 header()
 
-st.header("Профиль")
+st.title("Профиль")
 
 try:
     response = get_my_user()

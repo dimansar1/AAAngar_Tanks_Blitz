@@ -1,6 +1,5 @@
 import requests
 import streamlit as st
-from json import dumps
 
 from api.client import get_error_message, get_tank
 
@@ -28,5 +27,5 @@ if not response.ok:
 
 tank = response.json()
 
-st.header(tank['title'])
+st.title(tank.get('title'))
 render_favorite_button(tank, key_prefix="details")

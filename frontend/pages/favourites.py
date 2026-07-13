@@ -8,7 +8,7 @@ from patterns.header import header
 
 header()
 
-st.header("Избранное")
+st.title("Избранное")
 
 try:
     response = get_favourites()
@@ -27,6 +27,6 @@ if not favourites:
     st.stop()
 
 for favourite in favourites:
-    tank_id = favourite['tank_id']
+    tank_id = favourite.get('tank_id')
     tank = get_tank(tank_id).json()
     render_tank_card(tank)

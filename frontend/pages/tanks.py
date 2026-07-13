@@ -8,7 +8,7 @@ from patterns.header import header
 
 header()
 
-st.header("Список танков")
+st.title("Список танков")
 
 try:
     response = get_tanks()

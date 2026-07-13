@@ -8,7 +8,7 @@ from patterns.header import header
 header()
 
 
-st.header("Регистрация")
+st.title("Регистрация")
 
 with st.form("registration_form"):
     nickname = st.text_input("Никнейм", key="registration_nickname")

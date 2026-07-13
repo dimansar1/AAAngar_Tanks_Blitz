@@ -8,7 +8,7 @@ from patterns.header import header
 
 header()
 
-st.header("Вход")
+st.title("Вход")
 
 if is_authenticated():
     st.info("Вы уже вошли в аккаунт.")
