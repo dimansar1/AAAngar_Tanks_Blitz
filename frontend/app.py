@@ -20,7 +20,8 @@ if is_admin():
             st.Page("pages/admin/admin.py", title="Админка"),
             st.Page("pages/admin/create_tank.py", title="Добавить танк"),
             st.Page("pages/admin/edit_tanks.py", title="Редактировать танк"),
-            st.Page("pages/admin/update_tank.py", title="Редактрование танка"),
+            st.Page("pages/admin/update_tank.py", title="Редактирование танка"),
+            st.Page("pages/admin/users.py", title="Все пользователи"),
         ]
     
 navbar = st.navigation(pages, position='top')

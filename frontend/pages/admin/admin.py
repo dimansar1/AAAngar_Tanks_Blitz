@@ -13,4 +13,5 @@ if st.button('Редактировать танк'):
     st.switch_page('pages/admin/edit_tanks.py')
 
 st.subheader('Пользователи')
-st.button('Посмотреть всех пользователей')
+if st.button('Посмотреть всех пользователей'):
+    st.switch_page('pages/admin/users.py')
