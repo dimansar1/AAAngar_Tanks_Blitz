@@ -88,12 +88,71 @@ def get_error_message(response: rq.Response) -> str:
 def get_my_user():
     return request_with_authorization_header('GET', f'{USER_ENDPOINT}/users/me')
 
+def get_all_users():
+    return request_with_authorization_header('GET', f'{USER_ENDPOINT}/admin/users')
+
 
 def get_tanks():
     return request('GET', TANKS_ENDPOINT)
 
 def get_tank(tank_id: int):
     return request('GET', f'{TANKS_ENDPOINT}/{tank_id}')
+
+def create_tank(
+    title: str, 
+    photo_path: str,
+    health: str,
+    damage: str,
+    armor: str,
+    history: str,
+    recommendation: str,
+    category: str,
+    nation: str,
+    level: str,
+    ):
+    data = {
+        'title': title,
+        'photo_path': photo_path,
+        'health': health,
+        'damage': damage,
+        'armor': armor,
+        'history': history,
+        'recommendation': recommendation,
+        'category': category,
+        'nation': nation,
+        'level': level,
+    }
+    return request_with_authorization_header('POST', TANKS_ENDPOINT, payload=data)
+
+def update_tank(
+    tank_id: int,
+    title: str, 
+    photo_path: str,
+    health: str,
+    damage: str,
+    armor: str,
+    history: str,
+    recommendation: str,
+    category: str,
+    nation: str,
+    level: str,
+    ):
+    data = {
+        'title': title,
+        'photo_path': photo_path,
+        'health': health,
+        'damage': damage,
+        'armor': armor,
+        'history': history,
+        'recommendation': recommendation,
+        'category': category,
+        'nation': nation,
+        'level': level,
+    }
+    return request_with_authorization_header('PATCH', f'{TANKS_ENDPOINT}/{tank_id}', payload=data)
+
+def delete_tank(tank_id: int):
+    return request_with_authorization_header('DELETE', f'{TANKS_ENDPOINT}/{tank_id}')
 
 
 
@@ -108,6 +167,7 @@ def add_favourite(tank_id: int):
 
 def remove_favourite(tank_id: int):
     return request_with_authorization_header('DELETE', f'{FAVOURITES_ENDPOINT}/{tank_id}')
+
 
 
 if __name__ == '__main__':

@@ -1,5 +1,5 @@
 import streamlit as st
-from auth.state import is_authenticated
+from auth.state import is_authenticated, is_admin
 
 
 def header():
@@ -20,3 +20,8 @@ def header():
             st.switch_page('pages/profile.py')
         else:
             st.switch_page('pages/noregistration.py')
+    
+    if is_authenticated():
+        if is_admin():
+            if header.button('Админка'):
+                st.switch_page('pages/admin/admin.py')
