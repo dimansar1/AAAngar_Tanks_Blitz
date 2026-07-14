@@ -1,4 +1,7 @@
-from fastapi import APIRouter, Depends, status
+import uuid
+import os
+
+from fastapi import APIRouter, Depends, status, UploadFile
 from sqlalchemy.orm import Session
 
 from app.database import get_db
@@ -32,3 +35,18 @@ def update_tank(tank_id: int, schema: TankUpdate, service: TankService = Depends
 @router.delete("/{tank_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_tank(tank_id: int, service: TankService = Depends(get_tank_service)) -> None:
     service.delete_tank(tank_id)
+
+@router.post("/{tank_id}/photo", status_code=status.HTTP_201_CREATED)
+async def load_photo(tank_id: int, file: UploadFile, service: TankService = Depends(get_tank_service)):
+    CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+    MEDIA_DIR = os.path.join(CURRENT_DIR, "..", "media")
+    UPLOAD_DIR = os.path.abspath(MEDIA_DIR)
+
+    ext = file.filename
+    filename = f"{uuid.uuid4()}.{ext}"
+    filepath = os.path.join(UPLOAD_DIR, filename)
+
+    with open(filepath, "wb") as f:
+        f.write(await file.read())
+
+    return service.load_file(tank_id, filepath)

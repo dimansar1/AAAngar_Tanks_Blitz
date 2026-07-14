@@ -30,6 +30,8 @@ left, right = st.columns(2, vertical_alignment='center')
 
 if tank.get('photo_path') == '-':
     left.info('Изображение не добавлено')
+else:
+    left.image(tank.get("photo_path"), use_container_width=True)
 
 col_info, col_favourite = right.columns(2, vertical_alignment='center')
 col_info.title(tank.get('title'))
