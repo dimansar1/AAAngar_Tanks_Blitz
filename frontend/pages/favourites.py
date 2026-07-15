@@ -10,6 +10,7 @@ from patterns.cookie import controller
 
 header()
 
+st.set_page_config(layout="wide")
 st.title("Избранное")
 
 try:

@@ -2,16 +2,20 @@ import requests
 import streamlit as st
 
 from patterns.header import header
-from api.client import get_error_message, get_tank, update_tank
+from api.client import get_error_message, get_tank, update_tank, load_file
 
 header()
+
+st.set_page_config(layout="wide")
 tank_id = st.session_state.get('selected_tank_id')
 tank = get_tank(tank_id).json()
 st.title('Изменение танка')
 
 with st.form("create_tank_form"):
     title = st.text_input("Название танка", key="title", value=tank.get('title'))
-    photo_path = st.text_input("Фото танка", key="photo_path", value=tank.get('photo_path'))
+    photo_path = st.file_uploader(
+        "Фото танка", type=["jpg", "png", "webp"],
+    )
     health = st.text_input("Здоровье танка", key="health", value=tank.get('health'))
     damage = st.text_input("Урон танка", key="damage", value=tank.get('damage'))
     armor = st.text_input("Бронирование танка", key="armor", value=tank.get('armor'))
@@ -32,7 +36,6 @@ if submitted:
         response = update_tank(
             tank_id = tank_id,
             title = title.strip(),
-            photo_path = photo_path.strip(),
             health = health.strip(),
             damage = damage.strip(),
             armor = armor.strip(),
@@ -42,6 +45,8 @@ if submitted:
             nation = nation.strip(),
             level = level.strip(),
         )
+
+        response1 = load_file(tank_id, photo_path)
     except requests.RequestException:
         st.error("Backend недоступен. Проверьте, запущен ли FastAPI.")
         st.stop()

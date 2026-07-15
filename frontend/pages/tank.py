@@ -8,6 +8,7 @@ from patterns.tank import render_favorite_button
 
 header()
 
+st.set_page_config(layout="wide")
 tank_id = st.session_state.get("selected_tank_id")
 
 if tank_id is None:
@@ -31,7 +32,7 @@ left, right = st.columns(2, vertical_alignment='center')
 if tank.get('photo_path') == '-':
     left.info('Изображение не добавлено')
 else:
-    left.image(tank.get("photo_path"), use_container_width=True)
+    left.image(tank.get("photo_path"), width='stretch')
 
 col_info, col_favourite = right.columns(2, vertical_alignment='center')
 col_info.title(tank.get('title'))

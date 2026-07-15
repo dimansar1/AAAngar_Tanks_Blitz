@@ -7,7 +7,7 @@ from patterns.header import header
 
 header()
 
-
+st.set_page_config(layout="wide")
 st.title("Регистрация")
 
 with st.form("registration_form"):

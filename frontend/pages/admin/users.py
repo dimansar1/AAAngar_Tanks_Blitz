@@ -8,6 +8,7 @@ from patterns.header import header
 
 header()
 
+st.set_page_config(layout="wide")
 st.title("Пользователи")
 
 try:

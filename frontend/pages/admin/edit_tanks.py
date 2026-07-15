@@ -7,6 +7,8 @@ from patterns.tank import render_tank_card_for_edit
 from api.client import get_error_message, get_tanks
 
 header()
+
+st.set_page_config(layout="wide")
 st.title('Выберите танк для редактирования или удаления танка')
 
 try:

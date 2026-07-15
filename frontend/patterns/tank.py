@@ -62,7 +62,7 @@ def render_tank_card_for_edit(tank: dict) -> None:
 
     with st.container(border=True):
         if tank.get("photo_path") != '-':
-            st.image(tank.get("photo_path"), use_container_width=True)
+            st.image(tank.get("photo_path"), width='stretch')
         else:
             st.info("Изображение не добавлено")
 

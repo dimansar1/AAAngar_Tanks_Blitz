@@ -1,6 +1,7 @@
 import requests as rq
 from streamlit import session_state
 from typing import Optional
+from fastapi import UploadFile
 
 from patterns.cookie import controller
 
@@ -16,6 +17,7 @@ def request_with_authorization_header(
     endpoint: str,
     params: Optional[dict] = None,
     payload: Optional[dict] = None,
+    file: Optional[UploadFile] = None,
 ) -> rq.Response:
     headers = {
         "Authorization": f"Bearer {controller.get('access_token')}"
@@ -24,7 +26,7 @@ def request_with_authorization_header(
     if request_type == "GET":
         response = rq.get(endpoint, headers=headers, params=params)
     elif request_type == "POST":
-        response = rq.post(endpoint, headers=headers, params=params, json=payload)
+        response = rq.post(endpoint, headers=headers, params=params, json=payload, files=file)
     elif request_type == "PATCH":
         response = rq.patch(endpoint, headers=headers, params=params, json=payload)
     elif request_type == "DELETE":
@@ -100,7 +102,6 @@ def get_tank(tank_id: int):
 
 def create_tank(
     title: str, 
-    photo_path: str,
     health: str,
     damage: str,
     armor: str,
@@ -112,7 +113,6 @@ def create_tank(
     ):
     data = {
         'title': title,
-        'photo_path': photo_path,
         'health': health,
         'damage': damage,
         'armor': armor,
@@ -127,7 +127,6 @@ def create_tank(
 def update_tank(
     tank_id: int,
     title: str, 
-    photo_path: str,
     health: str,
     damage: str,
     armor: str,
@@ -139,7 +138,6 @@ def update_tank(
     ):
     data = {
         'title': title,
-        'photo_path': photo_path,
         'health': health,
         'damage': damage,
         'armor': armor,
@@ -168,6 +166,12 @@ def add_favourite(tank_id: int):
 def remove_favourite(tank_id: int):
     return request_with_authorization_header('DELETE', f'{FAVOURITES_ENDPOINT}/{tank_id}')
 
+
+def load_file(tank_id: int, file: Optional[UploadFile]):
+    data = {}
+    if file:
+        data = {'file': (file.name, file, file.type)}
+    return request_with_authorization_header('POST', f'{TANKS_ENDPOINT}/{tank_id}/photo', file=data)
 
 
 if __name__ == '__main__':
