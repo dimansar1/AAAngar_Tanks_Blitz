@@ -1,11 +1,12 @@
 import requests as rq
+import streamlit as st
 from streamlit import session_state
 from typing import Optional
 from fastapi import UploadFile
 
 from patterns.cookie import controller
 
-BACKEND_URL = "http://127.0.0.1:8000"
+BACKEND_URL = str(st.secrets["BACKEND_URL"]).rstrip("/")
 
 FAVOURITES_ENDPOINT = f'{BACKEND_URL}/favourites'
 TANKS_ENDPOINT = f'{BACKEND_URL}/tanks'
