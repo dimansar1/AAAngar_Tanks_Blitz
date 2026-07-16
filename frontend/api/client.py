@@ -5,7 +5,7 @@ from typing import Optional
 from fastapi import UploadFile
 from urllib.parse import quote
 
-from patterns.cookie import controller
+from patterns.cookie import get_cookie, remove_cookie
 
 BACKEND_URL = str(st.secrets["BACKEND_URL"]).rstrip("/")
 
@@ -40,9 +40,8 @@ def request_with_authorization_header(
     payload: Optional[dict] = None,
     file: Optional[UploadFile] = None,
 ) -> rq.Response:
-    headers = {
-        "Authorization": f"Bearer {controller.get('access_token')}"
-    }
+    access_token = get_cookie("access_token")
+    headers = {"Authorization": f"Bearer {access_token}"} if access_token else {}
 
     if request_type == "GET":
         response = rq.get(endpoint, headers=headers, params=params)
@@ -56,7 +55,7 @@ def request_with_authorization_header(
         raise ValueError("Неизвестный тип запроса")
 
     if response.status_code == 401:
-        controller.remove("access_token")
+        remove_cookie("access_token")
         session_state.pop("profile", None)
 
     return response
@@ -79,7 +78,7 @@ def request(
         raise ValueError("Неизвестный тип запроса")
 
     if response.status_code == 401:
-        controller.remove("access_token")
+        remove_cookie("access_token")
         session_state.pop("profile", None)
 
     return response
