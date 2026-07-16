@@ -8,6 +8,8 @@ from app.database import get_db
 from app.schemas.tank import TankCreate, TankResponse, TankUpdate
 from app.services.tank_service import TankService
 
+from pathlib import Path
+
 router = APIRouter(
     prefix="/tanks",
     tags=["tanks"],
@@ -38,13 +40,12 @@ def delete_tank(tank_id: int, service: TankService = Depends(get_tank_service)) 
 
 @router.post("/{tank_id}/photo", status_code=status.HTTP_201_CREATED)
 async def load_photo(tank_id: int, file: UploadFile, service: TankService = Depends(get_tank_service)):
-    CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-    MEDIA_DIR = os.path.join(CURRENT_DIR, "..", "media")
-    UPLOAD_DIR = os.path.abspath(MEDIA_DIR)
+    MEDIA_DIR = Path(__file__).resolve().parent.parent / "media"
+    MEDIA_DIR.mkdir(parents=True, exist_ok=True)
 
     ext = file.filename
     filename = f"{uuid.uuid4()}.{ext}"
-    filepath = os.path.join(UPLOAD_DIR, filename)
+    filepath = os.path.join(MEDIA_DIR, filename)
 
     with open(filepath, "wb") as f:
         f.write(await file.read())
