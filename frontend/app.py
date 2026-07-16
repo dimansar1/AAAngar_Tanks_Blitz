@@ -24,6 +24,6 @@ if is_admin():
             st.Page("pages/admin/users.py", title="Все пользователи"),
         ]
     
-navbar = st.navigation(pages, position='top')
+navbar = st.navigation(pages)
 
 navbar.run()
