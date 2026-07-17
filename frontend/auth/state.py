@@ -1,7 +1,33 @@
 import streamlit as st
+import requests
 from typing import Optional
 
 from patterns.cookie import controller
+
+
+def init_state() -> None:
+    if st.session_state.get("profile"):
+        return
+
+    access_token = controller.get("access_token")
+    if not access_token:
+        st.session_state.pop("profile", None)
+        return
+
+    from api.client import get_my_user
+
+    try:
+        response = get_my_user()
+    except requests.RequestException:
+        return
+
+    if response.ok:
+        st.session_state["profile"] = response.json()
+        return
+
+    if response.status_code == 401:
+        clear_auth()
+
 
 def save_auth(access_token: str, profile: dict) -> None:
     controller.set("access_token", access_token)
